@@ -13,7 +13,7 @@ let food ={   // variavel para criar numeros aleatórios(vai criar os elementos 
 }
 
 function criarBG(){ // função -CRIARBG- para criar o canvas - criar o fundo Background
-    context.fillStyle = "lightgreen";  // FILLSTYLE= cuida do estilo de desenho e adiciona cor
+    context.fillStyle = "yellow";  // FILLSTYLE= cuida do estilo de desenho e adiciona cor
     context.fillRect(0, 0, 16*box, 16*box); //desenha o retângulo usando x e y e a largura e altura setadas
 }
 
@@ -45,7 +45,13 @@ function iniciarJogo(){    // Plano cartesiano
     if(snake[0].x < 0 && direction == 'left') snake[0].x = 16 * box;
     if(snake[0].y > 15*box && direction == "down") snake[0].y = 0;
     if(snake[0].y < 0 && direction == 'up') snake[0].y = 16 * box;
-    
+
+    for(i = 1; i < snake.length; i++){  // compara se a posição 0 se chocar com a posição 1  ela para o jogo e da um alerta de game over
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+            clearInterval(jogo);
+            alert('GAME OVER! :(');
+        }
+    }
 
     criarBG(); 
     criarCobrinha();
@@ -59,7 +65,13 @@ function iniciarJogo(){    // Plano cartesiano
     if (direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    snake.pop(); // A função pop tira o último elemento da lista
+    if(snakeX != food.x || snakeY != food.y){  // condição caso a cabeça encontre a comida, ela cresça de tamanho
+        snake.pop(); // A função pop tira o último elemento da lista
+            }else{
+                food.x = Math.floor(Math.random() * 15 +1) * box;
+                food.y = Math.floor(Math.random() * 15 +1) * box;
+            }
+    
     
     let newHead ={  // Variavel para 
         x: snakeX,
